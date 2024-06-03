@@ -1,0 +1,37 @@
+@page "/create-chat"
+
+@using Microsoft.AspNetCore.Authorization
+@inherits CreateComponent
+@attribute [Authorize]
+
+<div>
+    <div>
+        <PageTitle>Create new chat</PageTitle>
+        <h3>Create new chat</h3>
+        <input class="input-create-chat" @bind-value="Name"/>
+        <button class="create-chat-button" @onclick="CreateChat">Submit</button>
+    </div>
+
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (Chats is not null && Chats.Any())
+            {
+                @foreach (var chat in Chats)
+                {
+                    <tr>
+                        <td>@chat?.Id</td>
+                        <td>@chat?.Name</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

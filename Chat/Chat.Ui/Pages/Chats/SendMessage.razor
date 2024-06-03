@@ -1,0 +1,65 @@
+@page "/send-message"
+
+@using Microsoft.AspNetCore.Authorization
+@inherits SendMessageComponent
+@attribute [Authorize]
+
+@if (Chats is not null && Chats.Any())
+{
+    <div>
+        <div>
+            <PageTitle>Send Message</PageTitle>
+            <h3>Send Message</h3>
+        </div>
+
+        <div>
+            <div class="row">
+                <span> Selected chat:</span>
+            </div>
+            <div class="row">
+                <div class="mb-1">
+                    <select class="mr-2" @bind="@ChatId">
+                        @foreach (var item in Chats)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <input class="input-send-message" @bind-value="Value"/>
+            <button class="send-message-button" @onclick="SendMessageAsync">Submit</button>
+        </div>
+
+
+        <div>
+            <h3>Get Messages By Chat Id</h3>
+            <div>
+                <input class="input-send-message" @bind-value="MessageChatId"/>
+                <button class="send-message-button" @onclick="GetMessagesByChatId">Submit</button>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Value</th>
+                    <th>Sended (Date & Time)</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Messages is not null && Messages.Any())
+                {
+                    @foreach (var product in Messages)
+                    {
+                        <tr>
+                            <td>@product.Value</td>
+                            <td>@product.DateTime</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
